@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ImBin } from "react-icons/im";
 import { MdKeyboardArrowUp } from "react-icons/md";
+
+const abrir = keyframes`
+  from {
+    height: 30px;
+  }
+  to {
+    height: 200px;
+  }
+`;
 
 const ContainerSection = styled.section`
   display: flex;
@@ -38,7 +47,7 @@ const ContainerData = styled.div`
 `;
 
 const Saudacao = styled.h2`
-  font-size: 3rem;
+  font-size: 2.5rem;
 `;
 
 const FormTarefa = styled.form`
@@ -51,10 +60,13 @@ const FormTarefa = styled.form`
 const DadosContainer = styled.div`
   position: relative;
   display: ${({ campoSelecionado }) => (campoSelecionado ? "flex" : "none")};
+  transition: display 5s ease-in-out;
   flex-direction: column;
   gap: 40px;
   padding-top: 40px;
-  height: ${({ campoSelecionado }) => (campoSelecionado ? "200px" : "")};
+  animation: ${({ campoSelecionado }) => (campoSelecionado ? abrir : "")};
+  animation-duration: 0.5s;
+  z-index: 0;
 `;
 
 const InputAddTarefa = styled.input`
@@ -62,6 +74,10 @@ const InputAddTarefa = styled.input`
   border: none;
   font-size: 1rem;
   color: #ffffff;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const ContainerNovaTarefa = styled.ul`
@@ -101,6 +117,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
   const [campoSelecionado, setCampoSelecionado] = useState(null);
   const [data, setData] = useState("");
   const [mes, setMes] = useState("");
+  const [desabilitado, setDesabilitado] = useState(false);
 
   const criarNovaTarefa = (id) => {
     const dataAtual = new Date();
@@ -133,7 +150,10 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
     setListas((prevListas) =>
       prevListas.map((lista) =>
         lista.id === idLista
-          ? { ...lista, task: lista.task.filter((tarefa) => tarefa.id !== idTarefa) }
+          ? {
+              ...lista,
+              task: lista.task.filter((tarefa) => tarefa.id !== idTarefa),
+            }
           : lista
       )
     );
@@ -250,8 +270,16 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                     <MdKeyboardArrowUp
                       size={"24px"}
                       color="#fff"
-                      style={{ position: "absolute", top: "-25px", right: "0px", cursor: "pointer" }}
-                      onClick={() => setCampoSelecionado(false)}
+                      style={{
+                        position: "absolute",
+                        top: "-25px",
+                        right: "0px",
+                        cursor: "pointer",
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCampoSelecionado(false);
+                      }}
                     />
                   </DadosContainer>
                 </FormTarefa>
@@ -260,7 +288,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                   {lista.task.map((tarefa) => (
                     <NovaTarefa key={tarefa.id}>
                       <div>
-                        <input type="checkbox" />
+                        <input type="checkbox" style={{width: "20px", height: "20px", borderRadius: "50%"}}/>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         <p>{tarefa.texto}</p>
