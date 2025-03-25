@@ -15,7 +15,7 @@ const abrir = keyframes`
 const ContainerSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: auto;
   background-color: #1d1d1d;
   color: aliceblue;
   gap: 24px;
@@ -25,8 +25,8 @@ const ContainerSection = styled.section`
 
   @media (max-width: 1175px) {
     margin: auto;
-    overflow-y: initial;
-    height: 100%;
+   
+    height: 100vh;
     padding: 35px;
   }
 `;
