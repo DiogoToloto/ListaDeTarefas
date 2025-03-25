@@ -6,7 +6,6 @@ import { BarraDeFiltro } from "./components/BarraDeFiltro/BarraDeFiltro";
 
 const ContainerApp = styled.div`
   display: flex;
-  justify-content: space-between;
   height: 100vh;
 
   @media (max-width: 1175px) {

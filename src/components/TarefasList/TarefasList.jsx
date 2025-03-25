@@ -26,7 +26,8 @@ const ContainerSection = styled.section`
   @media (max-width: 1175px) {
     margin: auto;
     overflow-y: initial;
-
+    height: 100%;
+    padding: 35px;
   }
 `;
 
