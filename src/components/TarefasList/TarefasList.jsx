@@ -21,9 +21,12 @@ const ContainerSection = styled.section`
   gap: 24px;
   padding: 50px;
   margin: 0px 500px 0px 250px;
+  overflow-y: scroll;
 
   @media (max-width: 1175px) {
     margin: auto;
+    overflow-y: initial;
+
   }
 `;
 
