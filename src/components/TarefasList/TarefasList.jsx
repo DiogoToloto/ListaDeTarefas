@@ -48,11 +48,19 @@ const ContainerData = styled.div`
 
 const Saudacao = styled.h2`
   font-size: 3.5rem;
+
+  @media (max-width: 1175px) {
+    font-size: 2.7rem;
+  }
 `;
 
 const SubTitulo = styled.h4`
   font-size: 2rem;
   color: #a0a0a0;
+
+  @media (max-width: 1175px) {
+    font-size: 1.5rem;
+  }
 `
 
 const FormTarefa = styled.form`
