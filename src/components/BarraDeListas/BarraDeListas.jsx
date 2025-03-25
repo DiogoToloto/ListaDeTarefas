@@ -24,6 +24,10 @@ const ContainerLista = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: 1175px) {
+    text-align: center;
+  }
 `;
 
 const ListName = styled.div`
@@ -58,6 +62,7 @@ const ListsContainerUl = styled.ul`
   color: aliceblue;
 
   @media (max-width: 1175px) {
+    justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
   }

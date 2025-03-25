@@ -47,8 +47,13 @@ const ContainerData = styled.div`
 `;
 
 const Saudacao = styled.h2`
-  font-size: 2.5rem;
+  font-size: 3.5rem;
 `;
+
+const SubTitulo = styled.h4`
+  font-size: 2rem;
+  color: #a0a0a0;
+`
 
 const FormTarefa = styled.form`
   width: 100%;
@@ -91,10 +96,10 @@ const NovaTarefa = styled.li`
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
   background-color: #4e4e4e;
-  padding: 15px 10px;
+  padding: 15px 15px;
   border-radius: 10px;
 `;
 
@@ -109,6 +114,19 @@ const Botao = styled.button`
   }
 `;
 
+const DivAlteravel = styled.div`
+  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: ${({desabilitado}) => (desabilitado ? "none" : "auto")};
+  opacity: ${({desabilitado}) => (desabilitado ? "0.5" : "1")};
+
+  p{
+    text-decoration: ${({desabilitado}) => (desabilitado ? "line-through" : "")};
+  }
+`;
+
 export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
   const [texto, setTexto] = useState("");
   const [dataTarefa, setDataTarefa] = useState("");
@@ -117,7 +135,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
   const [campoSelecionado, setCampoSelecionado] = useState(null);
   const [data, setData] = useState("");
   const [mes, setMes] = useState("");
-  const [desabilitado, setDesabilitado] = useState(false);
+  const [tarefasDesabilitadas, setTarefasDesabilitadas] = useState({});
 
   const criarNovaTarefa = (id) => {
     const dataAtual = new Date();
@@ -131,7 +149,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
 
     let novaTarefa = {
       id: Date.now(),
-      texto: texto,
+      texto: texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase(),
       dataCriacao: dataFormatada,
       dataAgendamento: dataTarefa,
       prioridade: prioridade,
@@ -188,6 +206,13 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
     setMes(mesNome);
   }, []);
 
+  const toggleTarefa = (idTarefa) => {
+    setTarefasDesabilitadas((prevState) => ({
+      ...prevState,
+      [idTarefa]: !prevState[idTarefa],
+    }));
+  };
+
   return (
     <ContainerSection>
       <ContainerTitulo>
@@ -197,7 +222,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
         </ContainerData>
         <div>
           <Saudacao>{mensagem}</Saudacao>
-          <h4>Quais são seus planos para hoje?</h4>
+          <SubTitulo>Quais são seus planos para hoje?</SubTitulo>
         </div>
       </ContainerTitulo>
       {listaSelecionada === null ? (
@@ -288,22 +313,17 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                   {lista.task.map((tarefa) => (
                     <NovaTarefa key={tarefa.id}>
                       <div>
-                        <input type="checkbox" style={{width: "20px", height: "20px", borderRadius: "50%"}}/>
+                        <input type="checkbox" checked={tarefasDesabilitadas[tarefa.id] || false} onChange={() => toggleTarefa(tarefa.id)}  style={{width: "20px", height: "20px", borderRadius: "50%"}}/>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <p>{tarefa.texto}</p>
+                      <DivAlteravel desabilitado={tarefasDesabilitadas[tarefa.id]}>
+                        <p style={{fontSize: "1.3rem"}}>{tarefa.texto}</p>
                         <p style={{ fontSize: "0.8rem" }}>
                           {tarefa.dataCriacao}
                         </p>
-                      </div>
+                      </DivAlteravel>
                       <div>
                         <ImBin
-                          style={{
-                            cursor: "pointer",
-                            position: "absolute",
-                            right: "20px",
-                            top: "28px",
-                          }}
+                          style={{cursor: "pointer"}}
                           onClick={() => deletarTarefa(lista.id, tarefa.id)}
                         />
                       </div>
