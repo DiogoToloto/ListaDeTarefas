@@ -21,64 +21,111 @@ const CustomCalendar = styled(Calendar)`
   }
 
   .react-calendar__navigation button {
-  min-width: 44px;
-  background: none;
-  color: #fff;
-  font-size: 1rem;
-}
-  
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #8b8b8b;
-}
+    min-width: 44px;
+    background: none;
+    color: #fff;
+    font-size: 1rem;
+  }
 
-.react-calendar__month-view__weekdays {
-  text-align: center;
-  text-transform: uppercase;
-  font: inherit;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #fff;
-}
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #8b8b8b;
+  }
 
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-  background: #d6c353;
-}
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+  }
 
-.react-calendar__month-view__weekdays abbr {
-  text-decoration: none !important;
-  border-bottom: none !important;
-}
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: #d6c353;
+  }
+
+  .react-calendar__month-view__weekdays abbr {
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
 `;
 
 const SectionContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 25px;
   position: fixed;
   right: 0;
   background-color: #313131;
   width: 500px;
   height: 100vh;
-  padding: 20PX;
+  padding-top: 20px;
 
   @media (max-width: 1175px) {
     align-items: center;
-    height: 500px;
+    height: 350px;
     bottom: 0;
     width: 100%;
     position: relative;
   }
 `;
 
-export const BarraDeFiltro = () => {
-  const [dataSelecionada, setDataSelecionada] = useState(new Date());
+const TituloTarefas = styled.h3`
+  
+  color: aliceblue;
+`
+
+const AgendamentosContainer = styled.div`
+  
+  width: 310px;
+  border: 2px solid #8a8787;
+  border-radius: 10px;
+  padding: 15px;
+
+  ul{
+    list-style: none;
+    color: #fff;
+
+    li{
+      display: flex;
+      justify-content: space-between;
+      
+
+      input{
+        background: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+        margin-bottom: 5px;
+        padding: 5px;
+      }
+    }
+  }
+`
+
+export const BarraDeFiltro = ({ handleDateChange, tarefasFiltradas, date, listas }) => {
 
   return (
     <SectionContainer>
-      <CustomCalendar onChange={setDataSelecionada} value={dataSelecionada} />
-      
+      <CustomCalendar onChange={handleDateChange} value={date} />
+
+      <div>
+        <TituloTarefas>Tarefas para {date.toLocaleDateString("pt-BR")}:</TituloTarefas>
+      </div>
+
+      <AgendamentosContainer>
+        <ul>
+          {tarefasFiltradas.length > 0 ? (
+            tarefasFiltradas.map((tarefa) => (
+              <li key={tarefa.id}><input type="text" value={tarefa.texto} /><button>x</button></li>
+            ))
+          ) : (
+            <p>Sem tarefas para este dia.</p>
+          )}
+        </ul>
+      </AgendamentosContainer>
     </SectionContainer>
   );
 };

@@ -15,7 +15,7 @@ const abrir = keyframes`
 const ContainerSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: auto;
+  width: 100%;
   background-color: #1d1d1d;
   color: aliceblue;
   gap: 24px;
@@ -25,7 +25,7 @@ const ContainerSection = styled.section`
 
   @media (max-width: 1175px) {
     margin: auto;
-   
+
     height: 100vh;
     padding: 35px;
   }
@@ -65,7 +65,7 @@ const SubTitulo = styled.h4`
   @media (max-width: 1175px) {
     font-size: 1.5rem;
   }
-`
+`;
 
 const FormTarefa = styled.form`
   width: 100%;
@@ -88,9 +88,11 @@ const DadosContainer = styled.div`
 
 const InputAddTarefa = styled.input`
   background: transparent;
-  border: none;
+
   font-size: 1rem;
   color: #ffffff;
+  border: none;
+  width: 90%;
 
   &:focus {
     outline: none;
@@ -102,17 +104,6 @@ const ContainerNovaTarefa = styled.ul`
   flex-direction: column;
   gap: 20px;
   list-style: none;
-`;
-
-const NovaTarefa = styled.li`
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  width: 100%;
-  background-color: #4e4e4e;
-  padding: 15px 15px;
-  border-radius: 10px;
 `;
 
 const Botao = styled.button`
@@ -127,15 +118,63 @@ const Botao = styled.button`
 `;
 
 const DivAlteravel = styled.div`
-  
   display: flex;
   flex-direction: column;
+  word-break: break-word;
+  pointer-events: ${({ desabilitado }) => (desabilitado ? "none" : "auto")};
+  opacity: ${({ desabilitado }) => (desabilitado ? "0.5" : "1")};
+
+  p {
+    text-decoration: ${({ desabilitado }) =>
+      desabilitado ? "line-through" : ""};
+  }
+`;
+
+
+const NovaTarefa = styled.li`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
   width: 100%;
-  pointer-events: ${({desabilitado}) => (desabilitado ? "none" : "auto")};
-  opacity: ${({desabilitado}) => (desabilitado ? "0.5" : "1")};
+  background-color: #4e4e4e;
+  padding: 15px 15px;
+  border-radius: 10px;
+`;
+
+const PrioridadeContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  align-items: center;
 
   p{
-    text-decoration: ${({desabilitado}) => (desabilitado ? "line-through" : "")};
+    font-size: 0.8rem;
+  }
+`;
+
+const CheckboxInput = styled.input`
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid ${(props) => props.bordaCor || '#d6c353'};
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+
+  &:checked {
+    background-color: ${(props) => props.bordaCor || '#d6c353'};
+  }
+
+  &:checked::before {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: white;
   }
 `;
 
@@ -174,6 +213,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
       )
     );
     setTexto("");
+    setPrioridade("");
   };
 
   const deletarTarefa = (idLista, idTarefa) => {
@@ -225,6 +265,19 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
     }));
   };
 
+  const corBordaPrioridade = (prioridade) => {
+    switch (prioridade) {
+      case 'baixa':
+        return '#f1c40f'; // Amarelo
+      case 'media':
+        return '#e67e22'; // Laranja
+      case 'alta':
+        return '#e74c3c'; // Vermelho
+      default:
+        return '#a0a0a0'; // Default (amarelo)
+    }
+  };
+
   return (
     <ContainerSection>
       <ContainerTitulo>
@@ -247,13 +300,14 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                 <FormTarefa
                   campoSelecionado={campoSelecionado}
                   onClick={() => setCampoSelecionado(true)}
+                  onSubmit={(e) => {e.preventDefault()}}
                 >
                   <InputAddTarefa
                     type="text"
                     placeholder="Adicionar nova tarefa"
                     value={texto}
                     onChange={(e) => setTexto(e.target.value)}
-                    required
+                    
                   />
                   <DadosContainer campoSelecionado={campoSelecionado}>
                     <div style={{ display: "flex", gap: "20px" }}>
@@ -274,25 +328,43 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                       />
                     </div>
 
-                    <div style={{ display: "flex", gap: "20px" }}>
-                      <h4>Prioridade</h4>
+                    <div style={{ display: "flex", gap: "15px" }}>
+                      <label htmlFor="">Prioridade:</label>
                       <div style={{ display: "flex", gap: "20px" }}>
                         <div>
                           <label htmlFor="">Baixa </label>
-                          <input type="radio" name="prioridade" id="" />
+                          <input
+                            type="radio"
+                            name="prioridade"
+                            id="prioridade-baixa"
+                            checked={prioridade === 'baixa'}
+                            onChange={() => setPrioridade('baixa')}
+                          />
                         </div>
                         <div>
-                          <label htmlFor="">Media </label>
-                          <input type="radio" name="prioridade" id="" />
+                          <label htmlFor="">Média </label>
+                          <input
+                            type="radio"
+                            name="prioridade"
+                            id="prioridade-media"
+                            checked={prioridade === 'media'}
+                            onChange={() => setPrioridade('media')}
+                          />
                         </div>
                         <div>
                           <label htmlFor="">Alta </label>
-                          <input type="radio" name="prioridade" id="" />
+                          <input
+                            type="radio"
+                            name="prioridade"
+                            id="prioridade-alta"
+                            checked={prioridade === 'alta'}
+                            onChange={() => setPrioridade('alta')}
+                          />
                         </div>
                       </div>
                     </div>
 
-                    <div>
+                    <div style={{display: "flex", gap: "10px"}}>
                       <Botao
                         type="submit"
                         onClick={(e) => {
@@ -301,9 +373,16 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                           setCampoSelecionado(texto.trim() === "");
                         }}
                       >
-                        Criar
+                        Criar tarefa
+                      </Botao>
+                      <Botao
+                        type="submit"
+                        
+                      >
+                        Agendar
                       </Botao>
                     </div>
+                    
                     <MdKeyboardArrowUp
                       size={"24px"}
                       color="#fff"
@@ -322,25 +401,38 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                 </FormTarefa>
 
                 <ContainerNovaTarefa key={Date.now()}>
-                  {lista.task.map((tarefa) => (
-                    <NovaTarefa key={tarefa.id}>
-                      <div>
-                        <input type="checkbox" checked={tarefasDesabilitadas[tarefa.id] || false} onChange={() => toggleTarefa(tarefa.id)}  style={{width: "20px", height: "20px", borderRadius: "50%"}}/>
-                      </div>
-                      <DivAlteravel desabilitado={tarefasDesabilitadas[tarefa.id]}>
-                        <p style={{fontSize: "1.3rem"}}>{tarefa.texto}</p>
-                        <p style={{ fontSize: "0.8rem" }}>
-                          {tarefa.dataCriacao}
-                        </p>
-                      </DivAlteravel>
-                      <div>
-                        <ImBin
-                          style={{cursor: "pointer"}}
-                          onClick={() => deletarTarefa(lista.id, tarefa.id)}
-                        />
-                      </div>
-                    </NovaTarefa>
-                  ))}
+                  {lista.task
+                    .sort((a, b) => (tarefasDesabilitadas[a.id] ? 1 : -1)) // Ordena: checked no final
+                    .map((tarefa) => (
+                      <NovaTarefa key={tarefa.id}>
+                        <div style={{display: "flex", alignItems: "center", gap: "15px"}}>
+                          <div >
+                            <CheckboxInput
+                              type="checkbox"
+                              checked={tarefasDesabilitadas[tarefa.id] || false}
+                              onChange={() => toggleTarefa(tarefa.id)}
+                              bordaCor={corBordaPrioridade(tarefa.prioridade)}
+                            />
+                          </div>
+                          <DivAlteravel
+                            desabilitado={tarefasDesabilitadas[tarefa.id]}
+                          >
+                            <p style={{ fontSize: "1.3rem" }}>{tarefa.texto}</p>
+                            <p style={{ fontSize: "0.8rem" }}>
+                              {tarefa.dataCriacao}
+                            </p>
+                          </DivAlteravel>
+                        </div>
+                        <PrioridadeContainer>
+                          <p>Prioridade: {tarefa.prioridade}</p>
+                          <ImBin
+                            style={{ cursor: "pointer" }}
+                            onClick={() => deletarTarefa(lista.id, tarefa.id)}
+                            
+                          />
+                        </PrioridadeContainer>
+                      </NovaTarefa>
+                    ))}
                 </ContainerNovaTarefa>
               </ContainerTarefas>
             )

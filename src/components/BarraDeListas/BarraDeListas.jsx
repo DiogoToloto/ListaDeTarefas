@@ -30,12 +30,14 @@ export const BarraDeListas = ({
   listaSelecionada,
   setListas,
 }) => {
-  const [lista, setLista] = useState("");
+  const [lista, setLista] = useState("Nova Lista");
+  const [editingId, setEditingId] = useState(null); // Estado para controlar o id da lista sendo editada
 
   const criarNovaLista = () => {
     const novaLista = { id: Date.now(), name: lista, task: [] };
     setListas([...listas, novaLista]);
     exibirListaSelecionada(novaLista.id);
+    setEditingId(novaLista.id)
   };
 
   return (
@@ -47,6 +49,8 @@ export const BarraDeListas = ({
         handleChange={handleChange}
         listaSelecionada={listaSelecionada}
         exibirListaSelecionada={exibirListaSelecionada} // Adicione esta linha
+        editingId={editingId}
+        setEditingId={setEditingId}
       />
       <div>
         <h2 style={{ fontSize: "2rem" }}>Todo List</h2>

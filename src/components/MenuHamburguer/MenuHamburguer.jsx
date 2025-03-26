@@ -57,12 +57,14 @@ const ListName = styled.div`
     isSelected ? "#d6c353" : "transparent"};
   cursor: pointer;
   border-radius: 5px;
+  color: ${({ isSelected }) => (isSelected ? "#000" : "#fff")};
+  
 
   input {
     width: 100px;
     background: transparent;
     border: none;
-    color: ${({ isSelected }) => (isSelected ? "#000000" : "#fff")};
+    color: ${({ isSelected }) => (isSelected ? "#000" : "#fff")};
     font-size: 1.1rem;
 
     &:focus {
@@ -90,7 +92,7 @@ const Botao = styled.button`
   padding: 2px 5px;
   background: transparent;
   border: none;
-  color: ${({ isSelected }) => (isSelected ? "#000000" : "#fff")};
+  color: ${({ isSelected }) => (isSelected ? "#000" : "#fff")};
   font-weight: bolder;
   cursor: pointer;
 
@@ -103,22 +105,19 @@ const Botao = styled.button`
 const BotaoNovaLista = styled.div`
   color: #9c9c9c;
   cursor: pointer;
-
-  
 `;
 
 const CloseButtom = styled.div`
-    
-    position: absolute;
-    right: 25px;
+  position: absolute;
+  right: 25px;
 
-    button{
-        border-radius: 50%;
-        height: 24px;
-        width: 24px;
-        border: none;
-    }
-`
+  button {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    border: none;
+  }
+`;
 
 export const MenuHamburguer = ({
   listas,
@@ -126,9 +125,29 @@ export const MenuHamburguer = ({
   deletarLista,
   listaSelecionada,
   handleChange,
-  exibirListaSelecionada
+  exibirListaSelecionada,
+  editingId,
+  setEditingId
 }) => {
   const [menuAberto, setMenuAberto] = useState(false);
+  
+
+  const handleDoubleClick = (id) => {
+    setEditingId(id); // Ativa o modo de edição para a lista clicada
+  };
+
+  const handleBlur = (id, name) => {
+    if (!name.trim()) {
+      handleChange(id, "Nova Lista"); // Define um valor padrão se o nome for vazio
+    }
+    setEditingId(null); // Desativa o modo de edição
+  };
+
+  const handleKeyPress = (e, id) => {
+    if (e.key === 'Enter') {
+      setEditingId(null); // Desativa o modo de edição ao pressionar Enter
+    }
+  };
 
   return (
     <>
@@ -144,22 +163,20 @@ export const MenuHamburguer = ({
               key={lista.id}
               isSelected={listaSelecionada === lista.id}
               onClick={() => exibirListaSelecionada(lista.id)}
+              onDoubleClick={() => handleDoubleClick(lista.id)} // Ativa o modo de edição ao clicar 2 vezes
             >
-              <input
-                type="text"
-                value={lista.name}
-                onChange={(e) => {
-                  handleChange(lista.id, e.target.value);
-                }}
-                onBlur={(e) => {
-                  if (!e.target.value.trim()) {
-                    e.target.value = "Nova Lista"; // Define um valor padrão se for deixado vazio
-                    handleChange(lista.id, "Nova Lista");
-                    e.target.focus();
-                  }
-                }}
-                autoFocus={listaSelecionada === lista.id}
-              />
+              {editingId === lista.id ? (
+                <input
+                  type="text"
+                  value={lista.name}
+                  onChange={(e) => handleChange(lista.id, e.target.value)}
+                  onBlur={() => handleBlur(lista.id, lista.name)}
+                  onKeyDown={(e) => handleKeyPress(e, lista.id)} // Permite desativar ao pressionar Enter
+                  autoFocus
+                />
+              ) : (
+                <span>{lista.name}</span> // Exibe o nome da lista normalmente quando não está em edição
+              )}
               <Botao
                 isSelected={listaSelecionada === lista.id}
                 onClick={() => deletarLista(lista.id)}
@@ -170,8 +187,8 @@ export const MenuHamburguer = ({
           ))}
         </ListsContainerUl>
         <div>
-        <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
-      </div>
+          <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
+        </div>
       </ContainerLista>
 
       {/* Lista dentro do menu hambúrguer no Mobile */}
@@ -180,25 +197,23 @@ export const MenuHamburguer = ({
         <ListsContainerUl>
           {listas.map((lista) => (
             <ListName
-            key={lista.id}
-            isSelected={listaSelecionada === lista.id}
-            onClick={() => exibirListaSelecionada(lista.id)} // Agora a função é passada corretamente
-          >
-              <input
-                type="text"
-                value={lista.name}
-                onChange={(e) => {
-                  handleChange(lista.id, e.target.value);
-                }}
-                onBlur={(e) => {
-                  if (!e.target.value.trim()) {
-                    e.target.value = "Nova Lista";
-                    handleChange(lista.id, "Nova Lista");
-                    e.target.focus();
-                  }
-                }}
-                autoFocus={listaSelecionada === lista.id}
-              />
+              key={lista.id}
+              isSelected={listaSelecionada === lista.id}
+              onClick={() => exibirListaSelecionada(lista.id)}
+              onDoubleClick={() => handleDoubleClick(lista.id)} // Ativa o modo de edição ao clicar 2 vezes
+            >
+              {editingId === lista.id ? (
+                <input
+                  type="text"
+                  value={lista.name}
+                  onChange={(e) => handleChange(lista.id, e.target.value)}
+                  onBlur={() => handleBlur(lista.id, lista.name)}
+                  onKeyDown={(e) => handleKeyPress(e, lista.id)} // Permite desativar ao pressionar Enter
+                  autoFocus={listaSelecionada === lista.id}
+                />
+              ) : (
+                <span>{lista.name}</span> // Exibe o nome da lista normalmente quando não está em edição
+              )}
               <Botao
                 isSelected={listaSelecionada === lista.id}
                 onClick={() => deletarLista(lista.id)}
@@ -209,11 +224,11 @@ export const MenuHamburguer = ({
           ))}
         </ListsContainerUl>
         <div>
-        <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
-      </div>
-      <CloseButtom>
-        <button onClick={() => setMenuAberto(false)}>X</button>
-      </CloseButtom>
+          <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
+        </div>
+        <CloseButtom>
+          <button onClick={() => setMenuAberto(false)}>X</button>
+        </CloseButtom>
       </MobileMenu>
     </>
   );
