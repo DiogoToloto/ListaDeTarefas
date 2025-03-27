@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { BarraDeFiltro } from "./components/BarraDeFiltro/BarraDeFiltro";
 
 const ContainerApp = styled.div`
+  position: relative;
   display: flex;
   height: 100vh;
 
@@ -18,7 +19,8 @@ function App() {
   const [listaSelecionada, setListaSelecionada] = useState(null);
   const [date, setDate] = useState(new Date());
   const [tarefasFiltradas, setTarefasFiltradas] = useState([]);
-  const [agendamentos, setAgendamentos] = useState([])
+  const [agendamentos, setAgendamentos] = useState([]);
+  const [menuAberto, setMenuAberto] = useState(false);
 
   const exibirListaSelecionada = (id) => {
     setListaSelecionada(id);
@@ -38,22 +40,34 @@ function App() {
 
   const handleDateChange = (dataSelecionada) => {
     setDate(dataSelecionada);
-  
+
     const dia = String(dataSelecionada.getDate()).padStart(2, "0");
     const mes = String(dataSelecionada.getMonth() + 1).padStart(2, "0"); // +1 porque os meses começam do 0
     const ano = dataSelecionada.getFullYear();
 
     const dataFormatada = `${dia}/${mes}/${ano}`;
-  
-    // Correção do flatMap e nome correto do array de tarefas
-    const tarefasDoDia = agendamentos.filter(tarefa => tarefa.dataAgendamento === dataFormatada);
-  
-    setTarefasFiltradas(tarefasDoDia);
 
+    // Correção do flatMap e nome correto do array de tarefas
+    const tarefasDoDia = agendamentos.filter(
+      (tarefa) => tarefa.dataAgendamento === dataFormatada
+    );
+
+    setTarefasFiltradas(tarefasDoDia);
   };
+
+  const Bluer = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    z-index: 1;
+  `;
 
   return (
     <ContainerApp>
+      <Bluer></Bluer>
       <BarraDeListas
         listas={listas}
         setListas={setListas}
@@ -61,8 +75,9 @@ function App() {
         deletarLista={deletarLista}
         handleChange={handleChange}
         listaSelecionada={listaSelecionada}
+        menuAberto={menuAberto}
+        setMenuAberto={setMenuAberto}
       />
-
       <TarefasList
         listas={listas}
         listaSelecionada={listaSelecionada}
@@ -70,8 +85,12 @@ function App() {
         setAgendamentos={setAgendamentos}
         agendamentos={agendamentos}
       />
-
-      <BarraDeFiltro handleDateChange={handleDateChange} date={date} tarefasFiltradas={tarefasFiltradas} listas={listas}/>
+      <BarraDeFiltro
+        handleDateChange={handleDateChange}
+        date={date}
+        tarefasFiltradas={tarefasFiltradas}
+        listas={listas}
+      />
     </ContainerApp>
   );
 }

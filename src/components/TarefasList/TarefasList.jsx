@@ -324,181 +324,180 @@ export const TarefasList = ({
   };
 
   return (
-    <ContainerSection>
-      <ContainerTitulo>
-        <ContainerData>
-          <p>{mes}</p>
-          <p>{data}</p>
-        </ContainerData>
-        <div>
-          <Saudacao>{mensagem}</Saudacao>
-          <SubTitulo>Quais são seus planos para hoje?</SubTitulo>
-        </div>
-      </ContainerTitulo>
-      {listaSelecionada === null ? (
-        <p>Selecione uma lista</p>
-      ) : (
-        listas.map(
-          (lista) =>
-            listaSelecionada === lista.id && (
-              <ContainerTarefas>
-                <FormTarefa
-                  campoSelecionado={campoSelecionado}
-                  onClick={() => setCampoSelecionado(true)}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  <InputAddTarefa
-                    type="text"
-                    placeholder="Adicionar nova tarefa"
-                    value={texto}
-                    onChange={(e) => setTexto(e.target.value)}
-                  />
-                  <DadosContainer campoSelecionado={campoSelecionado}>
-                    <div style={{ display: "flex", gap: "20px" }}>
-                      <label htmlFor="">Data:</label>
-                      <input
-                        onChange={(e) => {
-                          const dataISO = e.target.value; // Pega a data no formato YYYY-MM-DD
-                          const [ano, mes, dia] = dataISO.split("-"); // Divide a string
-                          const dataFormatada = `${dia}/${mes}/${ano}`; // Reorganiza no formato desejado
-                          setDataTarefa(dataFormatada); // Armazena a data formatada
-                        }}
-                        type="date"
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "#fff",
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="">Horario: </label>
-                      <TimeInput type="time" value={hora} onChange={(e) => {
-                        setHora(e.target.value)
-                      }}/>
-                    </div>
-
-                    <div style={{ display: "flex", gap: "15px" }}>
-                      <label htmlFor="">Prioridade:</label>
-                      <div style={{ display: "flex", gap: "20px" }}>
-                        <div>
-                          <label htmlFor="">Baixa </label>
-                          <input
-                            type="radio"
-                            name="prioridade"
-                            id="prioridade-baixa"
-                            checked={prioridade === "baixa"}
-                            onChange={() => setPrioridade("baixa")}
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="">Média </label>
-                          <input
-                            type="radio"
-                            name="prioridade"
-                            id="prioridade-media"
-                            checked={prioridade === "media"}
-                            onChange={() => setPrioridade("media")}
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="">Alta </label>
-                          <input
-                            type="radio"
-                            name="prioridade"
-                            id="prioridade-alta"
-                            checked={prioridade === "alta"}
-                            onChange={() => setPrioridade("alta")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <Botao
-                        type="submit"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          criarNovaTarefa(lista.id);
-                          setCampoSelecionado(texto.trim() === "");
-                        }}
-                      >
-                        Criar tarefa
-                      </Botao>
-                      <Botao
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          criarAgendamento();
-                          setCampoSelecionado(texto.trim() === "");
-                        }}
-                      >
-                        Agendar
-                      </Botao>
-                    </div>
-
-                    <MdKeyboardArrowUp
-                      size={"24px"}
-                      color="#fff"
-                      style={{
-                        position: "absolute",
-                        top: "-25px",
-                        right: "0px",
-                        cursor: "pointer",
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCampoSelecionado(false);
-                      }}
+    
+      
+      <ContainerSection>
+        <ContainerTitulo>
+          <ContainerData>
+            <p>{mes}</p>
+            <p>{data}</p>
+          </ContainerData>
+          <div>
+            <Saudacao>{mensagem}</Saudacao>
+            <SubTitulo>Quais são seus planos para hoje?</SubTitulo>
+          </div>
+        </ContainerTitulo>
+        {listaSelecionada === null ? (
+          <p>Selecione uma lista</p>
+        ) : (
+          listas.map(
+            (lista) =>
+              listaSelecionada === lista.id && (
+                <ContainerTarefas>
+                  <FormTarefa
+                    campoSelecionado={campoSelecionado}
+                    onClick={() => setCampoSelecionado(true)}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    <InputAddTarefa
+                      type="text"
+                      placeholder="Adicionar nova tarefa"
+                      value={texto}
+                      onChange={(e) => setTexto(e.target.value)}
                     />
-                  </DadosContainer>
-                </FormTarefa>
-
-                <ContainerNovaTarefa key={Date.now()}>
-                  {lista.task
-                    .sort((a, b) => (tarefasDesabilitadas[a.id] ? 1 : -1)) // Ordena: checked no final
-                    .map((tarefa) => (
-                      <NovaTarefa key={tarefa.id}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "15px",
+                    <DadosContainer campoSelecionado={campoSelecionado}>
+                      <div style={{ display: "flex", gap: "20px" }}>
+                        <label htmlFor="">Data:</label>
+                        <input
+                          onChange={(e) => {
+                            const dataISO = e.target.value; // Pega a data no formato YYYY-MM-DD
+                            const [ano, mes, dia] = dataISO.split("-"); // Divide a string
+                            const dataFormatada = `${dia}/${mes}/${ano}`; // Reorganiza no formato desejado
+                            setDataTarefa(dataFormatada); // Armazena a data formatada
                           }}
-                        >
+                          type="date"
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#fff",
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="">Horario: </label>
+                        <TimeInput type="time" value={hora} onChange={(e) => {
+                          setHora(e.target.value)
+                        }}/>
+                      </div>
+                      <div style={{ display: "flex", gap: "15px" }}>
+                        <label htmlFor="">Prioridade:</label>
+                        <div style={{ display: "flex", gap: "20px" }}>
                           <div>
-                            <CheckboxInput
-                              type="checkbox"
-                              checked={tarefasDesabilitadas[tarefa.id] || false}
-                              onChange={() => toggleTarefa(tarefa.id)}
-                              bordaCor={corBordaPrioridade(tarefa.prioridade)}
+                            <label htmlFor="">Baixa </label>
+                            <input
+                              type="radio"
+                              name="prioridade"
+                              id="prioridade-baixa"
+                              checked={prioridade === "baixa"}
+                              onChange={() => setPrioridade("baixa")}
                             />
                           </div>
-                          <DivAlteravel
-                            desabilitado={tarefasDesabilitadas[tarefa.id]}
-                          >
-                            <p style={{ fontSize: "1.1rem" }}>{tarefa.texto}</p>
-                            <p style={{ fontSize: "0.8rem" }}>
-                              {tarefa.dataCriacao}
-                            </p>
-                          </DivAlteravel>
+                          <div>
+                            <label htmlFor="">Média </label>
+                            <input
+                              type="radio"
+                              name="prioridade"
+                              id="prioridade-media"
+                              checked={prioridade === "media"}
+                              onChange={() => setPrioridade("media")}
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="">Alta </label>
+                            <input
+                              type="radio"
+                              name="prioridade"
+                              id="prioridade-alta"
+                              checked={prioridade === "alta"}
+                              onChange={() => setPrioridade("alta")}
+                            />
+                          </div>
                         </div>
-                        <PrioridadeContainer>
-                          
-                          <ImBin
-                            style={{ cursor: "pointer" }}
-                            onClick={() => deletarTarefa(lista.id, tarefa.id)}
-                          />
-                        </PrioridadeContainer>
-                      </NovaTarefa>
-                    ))}
-                </ContainerNovaTarefa>
-              </ContainerTarefas>
-            )
-        )
-      )}
-    </ContainerSection>
+                      </div>
+                      <div style={{ display: "flex", gap: "10px" }}>
+                        <Botao
+                          type="submit"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            criarNovaTarefa(lista.id);
+                            setCampoSelecionado(texto.trim() === "");
+                          }}
+                        >
+                          Criar tarefa
+                        </Botao>
+                        <Botao
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            criarAgendamento();
+                            setCampoSelecionado(texto.trim() === "");
+                          }}
+                        >
+                          Agendar
+                        </Botao>
+                      </div>
+                      <MdKeyboardArrowUp
+                        size={"24px"}
+                        color="#fff"
+                        style={{
+                          position: "absolute",
+                          top: "-25px",
+                          right: "0px",
+                          cursor: "pointer",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCampoSelecionado(false);
+                        }}
+                      />
+                    </DadosContainer>
+                  </FormTarefa>
+                  <ContainerNovaTarefa key={Date.now()}>
+                    {lista.task
+                      .sort((a, b) => (tarefasDesabilitadas[a.id] ? 1 : -1)) // Ordena: checked no final
+                      .map((tarefa) => (
+                        <NovaTarefa key={tarefa.id}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "15px",
+                            }}
+                          >
+                            <div>
+                              <CheckboxInput
+                                type="checkbox"
+                                checked={tarefasDesabilitadas[tarefa.id] || false}
+                                onChange={() => toggleTarefa(tarefa.id)}
+                                bordaCor={corBordaPrioridade(tarefa.prioridade)}
+                              />
+                            </div>
+                            <DivAlteravel
+                              desabilitado={tarefasDesabilitadas[tarefa.id]}
+                            >
+                              <p style={{ fontSize: "1.1rem" }}>{tarefa.texto}</p>
+                              <p style={{ fontSize: "0.8rem" }}>
+                                {tarefa.dataCriacao}
+                              </p>
+                            </DivAlteravel>
+                          </div>
+                          <PrioridadeContainer>
+      
+                            <ImBin
+                              style={{ cursor: "pointer" }}
+                              onClick={() => deletarTarefa(lista.id, tarefa.id)}
+                            />
+                          </PrioridadeContainer>
+                        </NovaTarefa>
+                      ))}
+                  </ContainerNovaTarefa>
+                </ContainerTarefas>
+              )
+          )
+        )}
+        
+      </ContainerSection>
+    
   );
 };

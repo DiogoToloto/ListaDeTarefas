@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { CiBoxList } from "react-icons/ci";
 
 const ContainerLista = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const MenuButton = styled.button`
 
   @media (max-width: 1175px) {
     display: block; /* Exibe o botão no mobile */
+    z-index: 1;
   }
 `;
 
@@ -127,9 +129,11 @@ export const MenuHamburguer = ({
   handleChange,
   exibirListaSelecionada,
   editingId,
-  setEditingId
+  setEditingId,
+  menuAberto,
+  setMenuAberto
 }) => {
-  const [menuAberto, setMenuAberto] = useState(false);
+  
   
 
   const handleDoubleClick = (id) => {
@@ -152,7 +156,7 @@ export const MenuHamburguer = ({
   return (
     <>
       {/* Botão de Menu no Mobile */}
-      <MenuButton onClick={() => setMenuAberto(true)}>☰</MenuButton>
+      <MenuButton onClick={() => setMenuAberto(true)}><CiBoxList /></MenuButton>
 
       {/* Lista para Desktop */}
       <ContainerLista>
