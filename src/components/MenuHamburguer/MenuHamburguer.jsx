@@ -29,7 +29,7 @@ const MobileMenu = styled.div`
     gap: 15px;
     top: 0px;
     height: 100vh;
-    width: 50%;
+    width: 80%;
     z-index: 1;
     padding: 25px;
   }
