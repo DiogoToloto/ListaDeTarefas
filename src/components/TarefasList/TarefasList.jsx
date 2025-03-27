@@ -24,10 +24,10 @@ const ContainerSection = styled.section`
   overflow-y: scroll;
 
   @media (max-width: 1175px) {
+    overflow-y: initial;
     margin: auto;
-
-    height: 100vh;
-    padding: 35px;
+   
+    padding: 35px 10px;
   }
 `;
 
@@ -79,8 +79,8 @@ const DadosContainer = styled.div`
   display: ${({ campoSelecionado }) => (campoSelecionado ? "flex" : "none")};
   transition: display 5s ease-in-out;
   flex-direction: column;
-  gap: 40px;
-  padding-top: 40px;
+  gap: 30px;
+  padding-top: 25px;
   animation: ${({ campoSelecionado }) => (campoSelecionado ? abrir : "")};
   animation-duration: 0.5s;
   z-index: 0;
@@ -88,7 +88,6 @@ const DadosContainer = styled.div`
 
 const InputAddTarefa = styled.input`
   background: transparent;
-
   font-size: 1rem;
   color: #ffffff;
   border: none;
@@ -130,7 +129,6 @@ const DivAlteravel = styled.div`
   }
 `;
 
-
 const NovaTarefa = styled.li`
   position: relative;
   display: flex;
@@ -148,7 +146,7 @@ const PrioridadeContainer = styled.div`
   gap: 20px;
   align-items: center;
 
-  p{
+  p {
     font-size: 0.8rem;
   }
 `;
@@ -157,14 +155,14 @@ const CheckboxInput = styled.input`
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 2px solid ${(props) => props.bordaCor || '#d6c353'};
+  border: 2px solid ${(props) => props.bordaCor || "#d6c353"};
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
   position: relative;
 
   &:checked {
-    background-color: ${(props) => props.bordaCor || '#d6c353'};
+    background-color: ${(props) => props.bordaCor || "#d6c353"};
   }
 
   &:checked::before {
@@ -178,7 +176,33 @@ const CheckboxInput = styled.input`
   }
 `;
 
-export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
+const TimeInput = styled.input`
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 16px;
+  background: transparent;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  color: #fff;
+
+  &:focus {
+    background: transparent;
+    outline: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    background-color: transparent;
+    cursor: pointer;
+  }
+`;
+
+export const TarefasList = ({
+  listas,
+  listaSelecionada,
+  setListas,
+  setAgendamentos,
+  agendamentos,
+}) => {
   const [texto, setTexto] = useState("");
   const [dataTarefa, setDataTarefa] = useState("");
   const [prioridade, setPrioridade] = useState("");
@@ -187,6 +211,7 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
   const [data, setData] = useState("");
   const [mes, setMes] = useState("");
   const [tarefasDesabilitadas, setTarefasDesabilitadas] = useState({});
+  const [hora, setHora] = useState("");
 
   const criarNovaTarefa = (id) => {
     const dataAtual = new Date();
@@ -229,6 +254,26 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
     );
   };
 
+  const criarAgendamento = () => {
+    if (texto.trim() === "") return;
+    if (dataTarefa.trim() === "") return;
+
+    let novoAgendamento = {
+      id: Date.now(),
+      texto: texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase(),
+      dataAgendamento: dataTarefa,
+      horaAgendamento: hora
+    };
+
+    setAgendamentos([...agendamentos, novoAgendamento]);
+    setTexto("");
+    setDataTarefa("")
+    setHora("")
+    
+    console.log(hora)
+    
+  };
+
   useEffect(() => {
     const meses = [
       "jan",
@@ -267,14 +312,14 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
 
   const corBordaPrioridade = (prioridade) => {
     switch (prioridade) {
-      case 'baixa':
-        return '#f1c40f'; // Amarelo
-      case 'media':
-        return '#e67e22'; // Laranja
-      case 'alta':
-        return '#e74c3c'; // Vermelho
+      case "baixa":
+        return "#f1c40f"; // Amarelo
+      case "media":
+        return "#e67e22"; // Laranja
+      case "alta":
+        return "#e74c3c"; // Vermelho
       default:
-        return '#a0a0a0'; // Default (amarelo)
+        return "#a0a0a0"; // Default (amarelo)
     }
   };
 
@@ -300,14 +345,15 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                 <FormTarefa
                   campoSelecionado={campoSelecionado}
                   onClick={() => setCampoSelecionado(true)}
-                  onSubmit={(e) => {e.preventDefault()}}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
                 >
                   <InputAddTarefa
                     type="text"
                     placeholder="Adicionar nova tarefa"
                     value={texto}
                     onChange={(e) => setTexto(e.target.value)}
-                    
                   />
                   <DadosContainer campoSelecionado={campoSelecionado}>
                     <div style={{ display: "flex", gap: "20px" }}>
@@ -328,6 +374,13 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                       />
                     </div>
 
+                    <div>
+                      <label htmlFor="">Horario: </label>
+                      <TimeInput type="time" value={hora} onChange={(e) => {
+                        setHora(e.target.value)
+                      }}/>
+                    </div>
+
                     <div style={{ display: "flex", gap: "15px" }}>
                       <label htmlFor="">Prioridade:</label>
                       <div style={{ display: "flex", gap: "20px" }}>
@@ -337,8 +390,8 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                             type="radio"
                             name="prioridade"
                             id="prioridade-baixa"
-                            checked={prioridade === 'baixa'}
-                            onChange={() => setPrioridade('baixa')}
+                            checked={prioridade === "baixa"}
+                            onChange={() => setPrioridade("baixa")}
                           />
                         </div>
                         <div>
@@ -347,8 +400,8 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                             type="radio"
                             name="prioridade"
                             id="prioridade-media"
-                            checked={prioridade === 'media'}
-                            onChange={() => setPrioridade('media')}
+                            checked={prioridade === "media"}
+                            onChange={() => setPrioridade("media")}
                           />
                         </div>
                         <div>
@@ -357,14 +410,14 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                             type="radio"
                             name="prioridade"
                             id="prioridade-alta"
-                            checked={prioridade === 'alta'}
-                            onChange={() => setPrioridade('alta')}
+                            checked={prioridade === "alta"}
+                            onChange={() => setPrioridade("alta")}
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div style={{display: "flex", gap: "10px"}}>
+                    <div style={{ display: "flex", gap: "10px" }}>
                       <Botao
                         type="submit"
                         onClick={(e) => {
@@ -376,13 +429,16 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                         Criar tarefa
                       </Botao>
                       <Botao
-                        type="submit"
-                        
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          criarAgendamento();
+                          setCampoSelecionado(texto.trim() === "");
+                        }}
                       >
                         Agendar
                       </Botao>
                     </div>
-                    
+
                     <MdKeyboardArrowUp
                       size={"24px"}
                       color="#fff"
@@ -405,8 +461,14 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                     .sort((a, b) => (tarefasDesabilitadas[a.id] ? 1 : -1)) // Ordena: checked no final
                     .map((tarefa) => (
                       <NovaTarefa key={tarefa.id}>
-                        <div style={{display: "flex", alignItems: "center", gap: "15px"}}>
-                          <div >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "15px",
+                          }}
+                        >
+                          <div>
                             <CheckboxInput
                               type="checkbox"
                               checked={tarefasDesabilitadas[tarefa.id] || false}
@@ -428,7 +490,6 @@ export const TarefasList = ({ listas, listaSelecionada, setListas }) => {
                           <ImBin
                             style={{ cursor: "pointer" }}
                             onClick={() => deletarTarefa(lista.id, tarefa.id)}
-                            
                           />
                         </PrioridadeContainer>
                       </NovaTarefa>

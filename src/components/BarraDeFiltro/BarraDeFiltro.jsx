@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useState } from "react";
+import { ImBin } from "react-icons/im";
 
 const CustomCalendar = styled(Calendar)`
   background: #313131;
@@ -62,11 +62,10 @@ const SectionContainer = styled.section`
   background-color: #313131;
   width: 500px;
   height: 100vh;
-  padding-top: 20px;
+  padding: 20px;
 
   @media (max-width: 1175px) {
     align-items: center;
-    height: 350px;
     bottom: 0;
     width: 100%;
     position: relative;
@@ -74,52 +73,77 @@ const SectionContainer = styled.section`
 `;
 
 const TituloTarefas = styled.h3`
-  
   color: aliceblue;
-`
+`;
 
 const AgendamentosContainer = styled.div`
-  
   width: 310px;
   border: 2px solid #8a8787;
   border-radius: 10px;
   padding: 15px;
 
-  ul{
+  ul {
     list-style: none;
     color: #fff;
 
-    li{
+    li {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      
+      border: 1px solid #fff;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
 
-      input{
+      input {
         background: transparent;
         color: #fff;
-        border: 1px solid #fff;
-        margin-bottom: 5px;
+        border: none;
         padding: 5px;
+
+        &:focus{
+          outline: none;
+        }
+      }
+
+      button {
+        background: transparent;
+        border: none;
       }
     }
   }
-`
+`;
 
-export const BarraDeFiltro = ({ handleDateChange, tarefasFiltradas, date, listas }) => {
-
+export const BarraDeFiltro = ({
+  handleDateChange,
+  tarefasFiltradas,
+  date,
+  listas,
+}) => {
   return (
     <SectionContainer>
       <CustomCalendar onChange={handleDateChange} value={date} />
 
       <div>
-        <TituloTarefas>Tarefas para {date.toLocaleDateString("pt-BR")}:</TituloTarefas>
+        <TituloTarefas>
+          Tarefas para {date.toLocaleDateString("pt-BR")}:
+        </TituloTarefas>
       </div>
 
       <AgendamentosContainer>
         <ul>
           {tarefasFiltradas.length > 0 ? (
             tarefasFiltradas.map((tarefa) => (
-              <li key={tarefa.id}><input type="text" value={tarefa.texto} /><button>x</button></li>
+              <li key={tarefa.id}>
+                <p>{tarefa.texto} \ {tarefa.horaAgendamento}</p>
+                <button>
+                  <ImBin
+                    style={{ cursor: "pointer" }}
+                    color="#fff"
+                    size={"15px"}
+                  />
+                </button>
+              </li>
             ))
           ) : (
             <p>Sem tarefas para este dia.</p>

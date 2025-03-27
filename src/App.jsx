@@ -18,6 +18,7 @@ function App() {
   const [listaSelecionada, setListaSelecionada] = useState(null);
   const [date, setDate] = useState(new Date());
   const [tarefasFiltradas, setTarefasFiltradas] = useState([]);
+  const [agendamentos, setAgendamentos] = useState([])
 
   const exibirListaSelecionada = (id) => {
     setListaSelecionada(id);
@@ -45,12 +46,10 @@ function App() {
     const dataFormatada = `${dia}/${mes}/${ano}`;
   
     // Correção do flatMap e nome correto do array de tarefas
-    const tarefasDoDia = listas.flatMap(lista =>
-      lista.task.filter(tarefa => tarefa.dataAgendamento === dataFormatada)
-    );
+    const tarefasDoDia = agendamentos.filter(tarefa => tarefa.dataAgendamento === dataFormatada);
   
     setTarefasFiltradas(tarefasDoDia);
-    console.log(tarefasDoDia)
+
   };
 
   return (
@@ -68,6 +67,8 @@ function App() {
         listas={listas}
         listaSelecionada={listaSelecionada}
         setListas={setListas}
+        setAgendamentos={setAgendamentos}
+        agendamentos={agendamentos}
       />
 
       <BarraDeFiltro handleDateChange={handleDateChange} date={date} tarefasFiltradas={tarefasFiltradas} listas={listas}/>
