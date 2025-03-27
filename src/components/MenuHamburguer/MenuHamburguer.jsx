@@ -1,6 +1,7 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { CiBoxList } from "react-icons/ci";
+import { MdPlaylistAdd } from "react-icons/md";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const ContainerLista = styled.div`
   display: flex;
@@ -181,17 +182,14 @@ export const MenuHamburguer = ({
               ) : (
                 <span>{lista.name}</span> // Exibe o nome da lista normalmente quando não está em edição
               )}
-              <Botao
-                isSelected={listaSelecionada === lista.id}
-                onClick={() => deletarLista(lista.id)}
-              >
-                X
-              </Botao>
+              <IoCloseCircleOutline size={"24px"} isSelected={listaSelecionada === lista.id}
+                onClick={() => deletarLista(lista.id)} />
+                  
             </ListName>
           ))}
         </ListsContainerUl>
         <div>
-          <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
+          <BotaoNovaLista onClick={criarNovaLista}><MdPlaylistAdd /> Nova Lista</BotaoNovaLista>
         </div>
       </ContainerLista>
 
@@ -218,20 +216,17 @@ export const MenuHamburguer = ({
               ) : (
                 <span>{lista.name}</span> // Exibe o nome da lista normalmente quando não está em edição
               )}
-              <Botao
-                isSelected={listaSelecionada === lista.id}
-                onClick={() => deletarLista(lista.id)}
-              >
-                X
-              </Botao>
+              
+              <IoCloseCircleOutline size={"24px"} isSelected={listaSelecionada === lista.id}
+                onClick={() => deletarLista(lista.id)} />
             </ListName>
           ))}
         </ListsContainerUl>
         <div>
-          <BotaoNovaLista onClick={criarNovaLista}>+ Nova Lista</BotaoNovaLista>
+          <BotaoNovaLista onClick={criarNovaLista}><MdPlaylistAdd /> Nova Lista</BotaoNovaLista>
         </div>
         <CloseButtom>
-          <button onClick={() => setMenuAberto(false)}>X</button>
+        <IoCloseCircleOutline size={"24px"} onClick={() => setMenuAberto(false)}/>
         </CloseButtom>
       </MobileMenu>
     </>
