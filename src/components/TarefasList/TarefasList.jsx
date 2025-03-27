@@ -479,14 +479,14 @@ export const TarefasList = ({
                           <DivAlteravel
                             desabilitado={tarefasDesabilitadas[tarefa.id]}
                           >
-                            <p style={{ fontSize: "1.3rem" }}>{tarefa.texto}</p>
+                            <p style={{ fontSize: "1.1rem" }}>{tarefa.texto}</p>
                             <p style={{ fontSize: "0.8rem" }}>
                               {tarefa.dataCriacao}
                             </p>
                           </DivAlteravel>
                         </div>
                         <PrioridadeContainer>
-                          <p>Prioridade: {tarefa.prioridade}</p>
+                          
                           <ImBin
                             style={{ cursor: "pointer" }}
                             onClick={() => deletarTarefa(lista.id, tarefa.id)}
