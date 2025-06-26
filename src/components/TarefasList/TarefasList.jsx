@@ -5,10 +5,20 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 
 const abrir = keyframes`
   from {
-    height: 30px;
+    height: 70px;
+    
   }
   to {
+    height: 278px;
+  }
+`;
+
+const fechar = keyframes`
+  from {
     height: 200px;
+  }
+  to {
+    height: 70px;
   }
 `;
 
@@ -16,6 +26,7 @@ const ContainerSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 100vh;
   background-color: #1d1d1d;
   color: aliceblue;
   gap: 24px;
@@ -25,9 +36,9 @@ const ContainerSection = styled.section`
 
   @media (max-width: 1175px) {
     overflow-y: initial;
-    margin: auto;
-   
     padding: 35px 10px;
+    margin: 0;
+    
   }
 `;
 
@@ -71,7 +82,9 @@ const FormTarefa = styled.form`
   width: 100%;
   background-color: #4e4e4e;
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 32px;
+  animation: ${({ campoSelecionado }) => (campoSelecionado ? abrir : fechar)};
+  animation-duration: 0.5s;
 `;
 
 const DadosContainer = styled.div`
@@ -81,9 +94,8 @@ const DadosContainer = styled.div`
   flex-direction: column;
   gap: 30px;
   padding-top: 25px;
-  animation: ${({ campoSelecionado }) => (campoSelecionado ? abrir : "")};
-  animation-duration: 0.5s;
   z-index: 0;
+  
 `;
 
 const InputAddTarefa = styled.input`
@@ -94,7 +106,9 @@ const InputAddTarefa = styled.input`
   width: 90%;
 
   &:focus {
-    outline: none;
+    outline: 1px solid #fff;
+    padding: 5px;
+    border-radius: 5px;
   }
 `;
 
@@ -111,9 +125,8 @@ const Botao = styled.button`
   border: 2px solid #d6c353;
   border-radius: 5px;
   cursor: pointer;
-  &:hover {
-    background-color: #cfc483;
-  }
+  color: #000;
+  
 `;
 
 const DivAlteravel = styled.div`
@@ -138,7 +151,7 @@ const NovaTarefa = styled.li`
   width: 100%;
   background-color: #4e4e4e;
   padding: 15px 15px;
-  border-radius: 10px;
+  border-radius: 32px;
 `;
 
 const PrioridadeContainer = styled.div`
@@ -267,7 +280,6 @@ export const TarefasList = ({
 
     setAgendamentos([...agendamentos, novoAgendamento]);
     setTexto("");
-    setDataTarefa("")
     setHora("")
     
     console.log(hora)

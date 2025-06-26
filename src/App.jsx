@@ -3,11 +3,12 @@ import { BarraDeListas } from "./components/BarraDeListas/BarraDeListas";
 import { TarefasList } from "./components/TarefasList/TarefasList";
 import styled from "styled-components";
 import { BarraDeFiltro } from "./components/BarraDeFiltro/BarraDeFiltro";
+import { Fundo } from "./components/Fundo/Fundo";
 
 const ContainerApp = styled.div`
   position: relative;
   display: flex;
-  height: 100vh;
+  height: 100%;
 
   @media (max-width: 1175px) {
     flex-direction: column;
@@ -57,6 +58,7 @@ function App() {
 
   return (
     <ContainerApp>
+      <Fundo menuAberto={menuAberto} setMenuAberto={setMenuAberto} />
       <BarraDeListas
         listas={listas}
         setListas={setListas}
@@ -74,6 +76,7 @@ function App() {
         setAgendamentos={setAgendamentos}
         agendamentos={agendamentos}
       />
+
       <BarraDeFiltro
         handleDateChange={handleDateChange}
         date={date}

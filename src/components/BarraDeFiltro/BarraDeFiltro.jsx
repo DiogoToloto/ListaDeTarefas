@@ -56,6 +56,7 @@ const SectionContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 25px;
   position: fixed;
   right: 0;
@@ -65,6 +66,7 @@ const SectionContainer = styled.section`
   padding: 20px;
 
   @media (max-width: 1175px) {
+    display: none;
     align-items: center;
     bottom: 0;
     width: 100%;
@@ -78,10 +80,10 @@ const TituloTarefas = styled.h3`
 `;
 
 const AgendamentosContainer = styled.div`
-  width: 310px;
-  border: 2px solid #8a8787;
-  border-radius: 10px;
-  padding: 15px;
+  width: 325px;
+  height: 300px;
+  overflow-y: scroll;
+  
 
   ul {
     list-style: none;
@@ -115,11 +117,25 @@ const AgendamentosContainer = styled.div`
   }
 `;
 
+const TagsContainer = styled.div`
+  
+  display: flex;
+  gap: 10px;
+`
+
+const Tags = styled.button`
+  
+  padding: 5px;
+  background-color: #808080;
+  color: #fff;
+  border: 2px solid #696969;
+  border-radius: 5px;
+`
+
 export const BarraDeFiltro = ({
   handleDateChange,
   tarefasFiltradas,
   date,
-  listas,
 }) => {
   return (
     <SectionContainer>
@@ -151,6 +167,11 @@ export const BarraDeFiltro = ({
           )}
         </ul>
       </AgendamentosContainer>
+      <TagsContainer>
+        <Tags>Prioridade</Tags>
+        <Tags>Data</Tags>
+        <Tags>Concluidas</Tags>
+      </TagsContainer>
     </SectionContainer>
   );
 };

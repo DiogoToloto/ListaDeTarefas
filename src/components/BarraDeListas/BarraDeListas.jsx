@@ -27,6 +27,15 @@ const AsideContainer = styled.aside`
   }
 `;
 
+const Logo = styled.h1`
+  
+  font-size: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`
+
 export const BarraDeListas = ({
   listas,
   exibirListaSelecionada,
@@ -63,7 +72,7 @@ export const BarraDeListas = ({
       />
       <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "center"}}>
       <HiMiniClipboardDocumentList size={"20px"}/>
-        <h2 style={{ fontSize: "1.5rem" }}>Todo List</h2>
+        <Logo>Todo List</Logo>
       </div>
     </AsideContainer>
   );

@@ -1,12 +1,18 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { CiBoxList } from "react-icons/ci";
 import { MdPlaylistAdd } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
+const CorpoLista = styled.main`
+  
+`;
+
 const ContainerLista = styled.div`
   display: flex;
+  width: 200px;
   flex-direction: column;
   gap: 10px;
+  
 
   @media (max-width: 1175px) {
     text-align: center;
@@ -14,27 +20,43 @@ const ContainerLista = styled.div`
   }
 `;
 
-const MobileMenu = styled.div`
-  display: none; /* Inicialmente escondido */
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  background: #222;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-
-  @media (max-width: 1175px) {
-    display: ${({ isOpen }) => (isOpen ? "flex" : "none")}; /* Mostra quando aberto */
-    flex-direction: column;
-    gap: 15px;
-    top: 0px;
-    height: 100vh;
-    width: 80%;
-    z-index: 1;
-    padding: 25px;
+const slideIn = keyframes`
+  from {
+    width: 0;
+    opacity: 0;
   }
+  to {
+    width: 50%;
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    width: 50%;
+    opacity: 1;
+  }
+  to {
+    width: 0;
+    opacity: 0;
+  }
+`;
+
+const MobileMenu = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: #222;
+  padding: ${({isOpen}) =>  isOpen ? "24px" : ""};
+  z-index: 100;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 15px;
+  display: flex;
+  animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
+  width: ${({ isOpen }) => (isOpen ? '50%' : '0')};
+
 `;
 
 const MenuButton = styled.button`
@@ -45,8 +67,14 @@ const MenuButton = styled.button`
   color: white;
   cursor: pointer;
 
+  p {
+    font-size: 1.3rem;
+  }
+
   @media (max-width: 1175px) {
-    display: block; /* Exibe o botão no mobile */
+    display: flex; /* Exibe o botão no mobile */
+    gap: 5px;
+    align-items: center;
     z-index: 1;
   }
 `;
@@ -54,12 +82,14 @@ const MenuButton = styled.button`
 const ListName = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 190px;
+  align-items: center;
+  width: 95%;
   padding: 10px;
   background-color: ${({ isSelected }) =>
     isSelected ? "#d6c353" : "transparent"};
   cursor: pointer;
-  border-radius: 5px;
+  border: 1px solid ${({isSelected}) => isSelected ? "#d6c353" : "#ccc"};
+  border-radius: 18px;
   color: ${({ isSelected }) => (isSelected ? "#000" : "#fff")};
   
 
@@ -79,47 +109,52 @@ const ListName = styled.div`
 const ListsContainerUl = styled.ul`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 5px;
-  list-style: none;
-  color: aliceblue;
+  height: 400px;
+  overflow-y: scroll;
 
-  @media (max-width: 1175px) {
-    flex-direction: row;
-    flex-wrap: wrap;
+  /* Estilização do scroll para navegadores WebKit (Chrome, Edge, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
   }
 `;
 
-const Botao = styled.button`
-  border-radius: 50%;
-  padding: 2px 5px;
-  background: transparent;
-  border: none;
-  color: ${({ isSelected }) => (isSelected ? "#000" : "#fff")};
-  font-weight: bolder;
+
+const BotaoNovaLista = styled.button`
+  width: 120px;
+  padding: 5px;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 18px;
   cursor: pointer;
+  background: transparent;
+  font-size: 1rem;
+  transition: .3s ease-in;
 
   &:hover {
-    background-color: #fff;
-    color: #000;
+    background-color: #424242;
+    
   }
 `;
 
-const BotaoNovaLista = styled.div`
-  color: #9c9c9c;
-  cursor: pointer;
-`;
-
-const CloseButtom = styled.div`
+const CloseButtom = styled.button`
   position: absolute;
   right: 25px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: aliceblue;
 
-  button {
-    border-radius: 50%;
-    height: 24px;
-    width: 24px;
-    border: none;
-  }
 `;
 
 export const MenuHamburguer = ({
@@ -155,13 +190,15 @@ export const MenuHamburguer = ({
   };
 
   return (
-    <>
+    <CorpoLista>
       {/* Botão de Menu no Mobile */}
-      <MenuButton onClick={() => setMenuAberto(true)}><CiBoxList /></MenuButton>
+      <MenuButton onClick={() => setMenuAberto(true)}><CiBoxList /><p>Minhas Listas</p></MenuButton>
 
       {/* Lista para Desktop */}
       <ContainerLista>
+
         <h3>Minhas listas</h3>
+
         <ListsContainerUl>
           {listas.map((lista) => (
             <ListName
@@ -188,9 +225,10 @@ export const MenuHamburguer = ({
             </ListName>
           ))}
         </ListsContainerUl>
-        <div>
+        
           <BotaoNovaLista onClick={criarNovaLista}><MdPlaylistAdd /> Nova Lista</BotaoNovaLista>
-        </div>
+        
+
       </ContainerLista>
 
       {/* Lista dentro do menu hambúrguer no Mobile */}
@@ -229,6 +267,6 @@ export const MenuHamburguer = ({
         <IoCloseCircleOutline size={"24px"} onClick={() => setMenuAberto(false)}/>
         </CloseButtom>
       </MobileMenu>
-    </>
+    </CorpoLista>
   );
 };
