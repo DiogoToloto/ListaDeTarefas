@@ -26,14 +26,14 @@ const slideIn = keyframes`
     opacity: 0;
   }
   to {
-    width: 50%;
+    width: 70%;
     opacity: 1;
   }
 `;
 
 const slideOut = keyframes`
   from {
-    width: 50%;
+    width: 70%;
     opacity: 1;
   }
   to {
@@ -55,7 +55,6 @@ const MobileMenu = styled.div`
   gap: 15px;
   display: flex;
   animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
-  width: ${({ isOpen }) => (isOpen ? '50%' : '0')};
 
 `;
 

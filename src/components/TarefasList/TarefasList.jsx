@@ -85,6 +85,7 @@ const FormTarefa = styled.form`
   border-radius: 32px;
   animation: ${({ campoSelecionado }) => (campoSelecionado ? abrir : fechar)};
   animation-duration: 0.5s;
+  box-shadow: 0px 2px 15px rgba(0,0,0, 0.5);
 `;
 
 const DadosContainer = styled.div`
@@ -109,6 +110,10 @@ const InputAddTarefa = styled.input`
     outline: 1px solid #fff;
     padding: 5px;
     border-radius: 5px;
+  }
+
+  &::placeholder {
+    color: #fff;
   }
 `;
 

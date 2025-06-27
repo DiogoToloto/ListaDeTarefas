@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { MenuHamburguer } from "../MenuHamburguer/MenuHamburguer";
 import { HiMiniClipboardDocumentList } from "react-icons/hi2";
+import { BarraDeFiltro } from "../BarraDeFiltro/BarraDeFiltro";
+import { MenuAgendamentos } from "../MenuAgendamentos/MenuAgendamentos";
 
 
 
@@ -45,6 +47,11 @@ export const BarraDeListas = ({
   setListas,
   menuAberto,
   setMenuAberto,
+  handleDateChange,
+  tarefasFiltradas,
+  date,
+  menuAbertoAG,
+  setMenuAbertoAG
 }) => {
   const [lista, setLista] = useState("Nova Lista");
   const [editingId, setEditingId] = useState(null); // Estado para controlar o id da lista sendo editada
@@ -73,6 +80,15 @@ export const BarraDeListas = ({
       <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "center"}}>
       <HiMiniClipboardDocumentList size={"20px"}/>
         <Logo>Todo List</Logo>
+      </div>
+      <div>
+        <MenuAgendamentos handleDateChange={handleDateChange}
+        date={date}
+        tarefasFiltradas={tarefasFiltradas}
+        listas={listas}
+        menuAbertoAG={menuAbertoAG}
+        setMenuAbertoAG={setMenuAbertoAG}
+        />
       </div>
     </AsideContainer>
   );

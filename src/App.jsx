@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BarraDeListas } from "./components/BarraDeListas/BarraDeListas";
 import { TarefasList } from "./components/TarefasList/TarefasList";
 import styled from "styled-components";
@@ -22,6 +22,21 @@ function App() {
   const [tarefasFiltradas, setTarefasFiltradas] = useState([]);
   const [agendamentos, setAgendamentos] = useState([]);
   const [menuAberto, setMenuAberto] = useState(false);
+  const [menuAbertoAG, setMenuAbertoAG] = useState(false);
+
+  useEffect(() => {
+    const handleRiseze = () => {
+      if (window.innerWidth > 1175 && menuAberto) {
+        setMenuAberto(false);
+      }
+    };
+
+    window.addEventListener("resize", handleRiseze);
+
+    handleRiseze();
+
+    return () => window.removeEventListener("resize", handleRiseze);
+  }, [menuAberto]);
 
   const exibirListaSelecionada = (id) => {
     setListaSelecionada(id);
@@ -67,7 +82,12 @@ function App() {
         handleChange={handleChange}
         listaSelecionada={listaSelecionada}
         menuAberto={menuAberto}
+        menuAbertoAG={menuAbertoAG}
         setMenuAberto={setMenuAberto}
+        setMenuAbertoAG={setMenuAbertoAG}
+        handleDateChange={handleDateChange}
+        date={date}
+        tarefasFiltradas={tarefasFiltradas}
       />
       <TarefasList
         listas={listas}

@@ -1,7 +1,30 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ImBin } from "react-icons/im";
+import { TfiAgenda } from "react-icons/tfi";
+
+const slideIn = keyframes`
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 70%;
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    width: 50%;
+    opacity: 1;
+  }
+  to {
+    width: 0;
+    opacity: 0;
+  }
+`;
 
 const CustomCalendar = styled(Calendar)`
   background: #313131;
@@ -53,25 +76,20 @@ const CustomCalendar = styled(Calendar)`
 `;
 
 const SectionContainer = styled.section`
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 25px;
-  position: fixed;
-  right: 0;
   background-color: #313131;
-  width: 500px;
   height: 100vh;
+  animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
   padding: 20px;
 
   @media (max-width: 1175px) {
-    display: none;
-    align-items: center;
-    bottom: 0;
-    width: 100%;
-    position: relative;
-    
   }
 `;
 
@@ -83,7 +101,6 @@ const AgendamentosContainer = styled.div`
   width: 325px;
   height: 300px;
   overflow-y: scroll;
-  
 
   ul {
     list-style: none;
@@ -104,7 +121,7 @@ const AgendamentosContainer = styled.div`
         border: none;
         padding: 5px;
 
-        &:focus{
+        &:focus {
           outline: none;
         }
       }
@@ -118,28 +135,55 @@ const AgendamentosContainer = styled.div`
 `;
 
 const TagsContainer = styled.div`
-  
   display: flex;
   gap: 10px;
-`
+`;
 
 const Tags = styled.button`
-  
   padding: 5px;
   background-color: #808080;
   color: #fff;
   border: 2px solid #696969;
   border-radius: 5px;
-`
+`;
 
-export const BarraDeFiltro = ({
+const ButtonClose = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  padding: 5px;
+`;
+
+const Agendamentos = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+`;
+
+export const MenuAgendamentos = ({
   handleDateChange,
   tarefasFiltradas,
   date,
+  menuAbertoAG,
+  setMenuAbertoAG,
 }) => {
   return (
     <div>
-      <SectionContainer>
+        <div className="d-flex">
+            <p>Agendamento</p>
+                  <Agendamentos onClick={() => setMenuAbertoAG(true)}>
+            {" "}
+            <TfiAgenda />
+                  </Agendamentos>
+        </div>
+
+      <SectionContainer isOpen={menuAbertoAG}>
         <CustomCalendar onChange={handleDateChange} value={date} />
         <div>
           <TituloTarefas>
@@ -151,7 +195,9 @@ export const BarraDeFiltro = ({
             {tarefasFiltradas.length > 0 ? (
               tarefasFiltradas.map((tarefa) => (
                 <li key={tarefa.id}>
-                  <p>{tarefa.texto} \ {tarefa.horaAgendamento}</p>
+                  <p>
+                    {tarefa.texto} \ {tarefa.horaAgendamento}
+                  </p>
                   <button>
                     <ImBin
                       style={{ cursor: "pointer" }}
@@ -171,6 +217,7 @@ export const BarraDeFiltro = ({
           <Tags>Data</Tags>
           <Tags>Concluidas</Tags>
         </TagsContainer>
+        <ButtonClose onClick={() => setMenuAbertoAG(false)}>x</ButtonClose>
       </SectionContainer>
     </div>
   );
