@@ -21,9 +21,9 @@ const AsideContainer = styled.aside`
   justify-content: start;
 
   @media (max-width: 1175px) {
+    position: relative;
     height: auto;
     width: 100%;
-    position: relative;
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0px 1px 10px rgba(0,0,0, 0.4);

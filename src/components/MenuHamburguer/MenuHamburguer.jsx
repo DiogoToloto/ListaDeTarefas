@@ -56,7 +56,6 @@ const MobileMenu = styled.div`
   gap: 15px;
   display: flex;
   animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
-
 `;
 
 const MenuButton = styled.button`

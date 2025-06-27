@@ -26,20 +26,19 @@ const ContainerSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 94.2vh;
   background-color: #1d1d1d;
   color: aliceblue;
   gap: 24px;
+  min-height: 100vh;
   padding: 50px;
   margin: 0px 500px 0px 250px;
-  overflow-y: scroll;
   pointer-events: ${({$menuAberto, $menuAbertoAG}) => ($menuAberto || $menuAbertoAG ? "none" : "auto")};
 
   @media (max-width: 1175px) {
     overflow-y: initial;
     padding: 35px 10px;
     margin: 0;
-    
+    min-height: 94.2vh;
   }
 `;
 

@@ -29,6 +29,10 @@ function App() {
       if (window.innerWidth > 1175 && menuAberto) {
         setMenuAberto(false);
       }
+
+      if (window.innerWidth > 1175 && menuAbertoAG) {
+        setMenuAbertoAG(false);
+      }
     };
 
     window.addEventListener("resize", handleRiseze);
@@ -36,7 +40,20 @@ function App() {
     handleRiseze();
 
     return () => window.removeEventListener("resize", handleRiseze);
-  }, [menuAberto]);
+  }, [menuAberto, menuAbertoAG]);
+
+  useEffect(() => {
+    if (menuAbertoAG || menuAberto) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    // Cleanup (caso o componente desmonte com o menu aberto)
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [menuAbertoAG, menuAberto]);
 
   const exibirListaSelecionada = (id) => {
     setListaSelecionada(id);
