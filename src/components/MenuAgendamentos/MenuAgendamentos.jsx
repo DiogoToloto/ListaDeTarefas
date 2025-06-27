@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ImBin } from "react-icons/im";
 import { TfiAgenda } from "react-icons/tfi";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const slideIn = keyframes`
   from {
@@ -90,6 +91,7 @@ const SectionContainer = styled.section`
   height: 100vh;
   animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
   padding: 20px;
+  z-index: 100;
 `;
 
 const TituloTarefas = styled.h3`
@@ -133,33 +135,21 @@ const AgendamentosContainer = styled.div`
   }
 `;
 
-const TagsContainer = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const Tags = styled.button`
-  padding: 5px;
-  background-color: #808080;
-  color: #fff;
-  border: 2px solid #696969;
-  border-radius: 5px;
-`;
-
-const ButtonClose = styled.button`
+const CloseButtom = styled.button`
   position: absolute;
-  top: 20px;
-  right: 30px;
-  padding: 5px;
+  right: 25px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: aliceblue;
+
 `;
 
 const Agendamentos = styled.button`
   display: flex;
   align-items: center;
-  gap: 6px;
   background-color: transparent;
   border: none;
-  padding: 10px;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
@@ -170,6 +160,7 @@ const ContainerBtAgendamento = styled.div`
     align-items: center;
     display: none;
     cursor: pointer;
+    gap: 4px;
 
     @media (max-width: 1175px){
         display: flex;
@@ -221,12 +212,10 @@ export const MenuAgendamentos = ({
             )}
           </ul>
         </AgendamentosContainer>
-        <TagsContainer>
-          <Tags>Prioridade</Tags>
-          <Tags>Data</Tags>
-          <Tags>Concluidas</Tags>
-        </TagsContainer>
-        <ButtonClose onClick={() => setMenuAbertoAG(false)}>x</ButtonClose>
+        
+        <CloseButtom>
+                <IoCloseCircleOutline size={"24px"} onClick={() => setMenuAbertoAG(false)}/>
+                </CloseButtom>
       </SectionContainer>
     </div>
   );

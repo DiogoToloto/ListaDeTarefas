@@ -26,6 +26,7 @@ const AsideContainer = styled.aside`
     position: relative;
     flex-direction: row;
     justify-content: space-between;
+    box-shadow: 0px 1px 10px rgba(0,0,0, 0.4);
   }
 `;
 

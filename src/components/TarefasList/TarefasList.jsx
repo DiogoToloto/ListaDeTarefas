@@ -33,6 +33,7 @@ const ContainerSection = styled.section`
   padding: 50px;
   margin: 0px 500px 0px 250px;
   overflow-y: scroll;
+  pointer-events: ${({$menuAberto, $menuAbertoAG}) => ($menuAberto || $menuAbertoAG ? "none" : "auto")};
 
   @media (max-width: 1175px) {
     overflow-y: initial;
@@ -220,6 +221,8 @@ export const TarefasList = ({
   setListas,
   setAgendamentos,
   agendamentos,
+  menuAberto,
+  menuAbertoAG
 }) => {
   const [texto, setTexto] = useState("");
   const [dataTarefa, setDataTarefa] = useState("");
@@ -341,9 +344,7 @@ export const TarefasList = ({
   };
 
   return (
-    
-      
-      <ContainerSection>
+      <ContainerSection $menuAberto={menuAberto} $menuAbertoAG={menuAbertoAG}>
         <ContainerTitulo>
           <ContainerData>
             <p>{mes}</p>

@@ -73,7 +73,7 @@ function App() {
 
   return (
     <ContainerApp>
-      <Fundo menuAberto={menuAberto} setMenuAberto={setMenuAberto} />
+      <Fundo menuAberto={menuAberto} menuAbertoAG={menuAbertoAG} />
       <BarraDeListas
         listas={listas}
         setListas={setListas}
@@ -95,6 +95,8 @@ function App() {
         setListas={setListas}
         setAgendamentos={setAgendamentos}
         agendamentos={agendamentos}
+        menuAberto={menuAberto}
+        menuAbertoAG={menuAbertoAG}
       />
 
       <BarraDeFiltro

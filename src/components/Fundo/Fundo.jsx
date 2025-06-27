@@ -7,12 +7,12 @@ const FundoBlur = styled.div`
     left: 0;
     bottom: 0;
     height: 100vh;
-    backdrop-filter: ${({$menuAberto}) => ($menuAberto ? "blur(5px)" : "none")};
+    backdrop-filter: ${({$menuAberto, $menuAbertoAG}) => ($menuAberto || $menuAbertoAG ? "blur(5px)" : "none")};
     z-index: 99;
     pointer-events: none;
     transition: filter 1s ease-in;
 `;
 
-export const Fundo = ({children, menuAberto}) => {
-    return <FundoBlur $menuAberto={menuAberto}/>
+export const Fundo = ({ menuAberto, menuAbertoAG}) => {
+    return <FundoBlur $menuAberto={menuAberto} $menuAbertoAG={menuAbertoAG}/>
 }
