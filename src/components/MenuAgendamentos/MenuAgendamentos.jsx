@@ -99,8 +99,8 @@ const TituloTarefas = styled.h3`
 `;
 
 const AgendamentosContainer = styled.div`
-  width: 325px;
-  height: 300px;
+  width: 100%;
+  height: 150px;
   overflow-y: scroll;
 
   ul {

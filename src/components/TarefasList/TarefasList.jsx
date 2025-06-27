@@ -26,7 +26,7 @@ const ContainerSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
+  min-height: 94.2vh;
   background-color: #1d1d1d;
   color: aliceblue;
   gap: 24px;
@@ -514,7 +514,6 @@ export const TarefasList = ({
               )
           )
         )}
-        
       </ContainerSection>
     
   );
