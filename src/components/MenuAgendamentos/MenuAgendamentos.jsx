@@ -23,15 +23,17 @@ const slideOut = keyframes`
   to {
     width: 0;
     opacity: 0;
+    display: none;
   }
 `;
 
 const CustomCalendar = styled(Calendar)`
   background: #313131;
   border: none;
+  margin-top: 50px;
 
   .react-calendar__tile {
-    color: #a7a7a7;
+    color: #ffffff;
   }
 
   .react-calendar__tile--active {
@@ -46,13 +48,13 @@ const CustomCalendar = styled(Calendar)`
   .react-calendar__navigation button {
     min-width: 44px;
     background: none;
-    color: #fff;
+    color: #ffffff;
     font-size: 1rem;
   }
 
   .react-calendar__navigation button:enabled:hover,
   .react-calendar__navigation button:enabled:focus {
-    background-color: #8b8b8b;
+    background-color: #7c7c7c;
   }
 
   .react-calendar__month-view__weekdays {
@@ -61,7 +63,7 @@ const CustomCalendar = styled(Calendar)`
     font: inherit;
     font-size: 1rem;
     font-weight: bold;
-    color: #fff;
+    color: #ffffff;
   }
 
   .react-calendar__tile--active:enabled:hover,
@@ -88,9 +90,6 @@ const SectionContainer = styled.section`
   height: 100vh;
   animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
   padding: 20px;
-
-  @media (max-width: 1175px) {
-  }
 `;
 
 const TituloTarefas = styled.h3`
@@ -166,6 +165,17 @@ const Agendamentos = styled.button`
   cursor: pointer;
 `;
 
+const ContainerBtAgendamento = styled.div`
+    display: flex;
+    align-items: center;
+    display: none;
+    cursor: pointer;
+
+    @media (max-width: 1175px){
+        display: flex;
+    }
+`;
+
 export const MenuAgendamentos = ({
   handleDateChange,
   tarefasFiltradas,
@@ -175,13 +185,12 @@ export const MenuAgendamentos = ({
 }) => {
   return (
     <div>
-        <div className="d-flex">
+        <ContainerBtAgendamento onClick={() => setMenuAbertoAG(true)}>
             <p>Agendamento</p>
-                  <Agendamentos onClick={() => setMenuAbertoAG(true)}>
-            {" "}
+                  <Agendamentos>
             <TfiAgenda />
                   </Agendamentos>
-        </div>
+        </ContainerBtAgendamento>
 
       <SectionContainer isOpen={menuAbertoAG}>
         <CustomCalendar onChange={handleDateChange} value={date} />

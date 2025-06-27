@@ -29,6 +29,16 @@ const AsideContainer = styled.aside`
   }
 `;
 
+const ContainerLogo = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  @media (max-width: 1175px){
+    display: none;
+  }
+`;
+
 const Logo = styled.h1`
   
   font-size: 2rem;
@@ -77,10 +87,10 @@ export const BarraDeListas = ({
         menuAberto={menuAberto}
         setMenuAberto={setMenuAberto}
       />
-      <div style={{display: "flex", flexDirection: "row-reverse", alignItems: "center"}}>
+      <ContainerLogo>
       <HiMiniClipboardDocumentList size={"20px"}/>
         <Logo>Todo List</Logo>
-      </div>
+      </ContainerLogo>
       <div>
         <MenuAgendamentos handleDateChange={handleDateChange}
         date={date}

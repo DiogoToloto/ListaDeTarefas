@@ -39,6 +39,7 @@ const slideOut = keyframes`
   to {
     width: 0;
     opacity: 0;
+    display: none;
   }
 `;
 
@@ -60,14 +61,14 @@ const MobileMenu = styled.div`
 
 const MenuButton = styled.button`
   display: none;
-  font-size: 24px;
+  font-size: 20px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
 
   p {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   @media (max-width: 1175px) {
