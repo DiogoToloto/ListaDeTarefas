@@ -10,7 +10,7 @@ const abrir = keyframes`
     
   }
   to {
-    height: 278px;
+    height: 377px;
   }
 `;
 
@@ -238,6 +238,7 @@ const ContainerInputs =styled.div`
   border: 1px solid #ccc;
   border-radius: 22px;
   padding: 6px;
+  gap: 10px;
   background-color: #797979;
 `;
 
@@ -248,7 +249,7 @@ const ContainerInputRadio = styled.div`
   border: 1px solid #ccc;
   border-radius: 22px;
   padding: 6px;
-  gap: 20px;
+  gap: 10px;
 
   &:hover {
     border: 1px solid #d6c353;
@@ -444,9 +445,9 @@ export const TarefasList = ({
                           setHora(e.target.value)
                         }}/>
                       </ContainerInputs>
-                      <ContainerInputs style={{flexWrap: 'wrap'}}>
+                      <ContainerInputs style={{flexWrap: 'wrap', justifyContent: 'center', gap: '5px'}}>
                         <label htmlFor="">Prioridade:</label>
-                        <div style={{ display: "flex", gap: "20px" }}>
+                        <div style={{ display: "flex", gap: "10px" }}>
                           <ContainerInputRadio>
                             <label htmlFor="prioridade-baixa">Baixa </label>
                             <input
