@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { ImBin } from "react-icons/im";
 import { MdKeyboardArrowUp } from "react-icons/md";
+import { data } from "react-router-dom";
 
 const abrir = keyframes`
   from {
@@ -129,7 +130,7 @@ const Botao = styled.button`
   padding: 5px 10px;
   background-color: #d6c353;
   border: 2px solid #d6c353;
-  border-radius: 5px;
+  border-radius: 14px;
   cursor: pointer;
   color: #000;
   
@@ -197,22 +198,70 @@ const CheckboxInput = styled.input`
 
 const TimeInput = styled.input`
   border: 1px solid #fff;
-  border-radius: 5px;
-  padding: 3px;
+  border-radius: 16px;
+  padding: 6px;
   font-size: 16px;
   background: transparent;
   transition: border-color 0.3s ease, background-color 0.3s ease;
   color: #fff;
+  width: 80%;
 
   &:focus {
     background: transparent;
-    outline: none;
+    outline: 1px solid #d6c353;
   }
 
   &::-webkit-calendar-picker-indicator {
     background-color: transparent;
     cursor: pointer;
   }
+`;
+
+const InputData = styled.input`
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  padding: 6px;
+  color: #fff;
+  font-size: 1rem;
+  width: 80%;
+
+  &:focus{
+    outline: 1px solid #d6c353;
+  }
+`
+
+const ContainerInputs =styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 22px;
+  padding: 6px;
+  background-color: #797979;
+`;
+
+const ContainerInputRadio = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 22px;
+  padding: 6px;
+  gap: 20px;
+
+  &:hover {
+    border: 1px solid #d6c353;
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  input {
+    cursor: pointer;
+  }
+  
 `;
 
 export const TarefasList = ({
@@ -376,9 +425,9 @@ export const TarefasList = ({
                       onChange={(e) => setTexto(e.target.value)}
                     />
                     <DadosContainer campoSelecionado={campoSelecionado}>
-                      <div style={{ display: "flex", gap: "20px" }}>
+                      <ContainerInputs >
                         <label htmlFor="">Data:</label>
-                        <input
+                        <InputData
                           onChange={(e) => {
                             const dataISO = e.target.value; // Pega a data no formato YYYY-MM-DD
                             const [ano, mes, dia] = dataISO.split("-"); // Divide a string
@@ -386,24 +435,20 @@ export const TarefasList = ({
                             setDataTarefa(dataFormatada); // Armazena a data formatada
                           }}
                           type="date"
-                          style={{
-                            background: "transparent",
-                            border: "none",
-                            color: "#fff",
-                          }}
+                          
                         />
-                      </div>
-                      <div>
+                      </ContainerInputs>
+                      <ContainerInputs >
                         <label htmlFor="">Horario: </label>
                         <TimeInput type="time" value={hora} onChange={(e) => {
                           setHora(e.target.value)
                         }}/>
-                      </div>
-                      <div style={{ display: "flex", gap: "15px" }}>
+                      </ContainerInputs>
+                      <ContainerInputs>
                         <label htmlFor="">Prioridade:</label>
                         <div style={{ display: "flex", gap: "20px" }}>
-                          <div>
-                            <label htmlFor="">Baixa </label>
+                          <ContainerInputRadio>
+                            <label htmlFor="prioridade-baixa">Baixa </label>
                             <input
                               type="radio"
                               name="prioridade"
@@ -411,9 +456,9 @@ export const TarefasList = ({
                               checked={prioridade === "baixa"}
                               onChange={() => setPrioridade("baixa")}
                             />
-                          </div>
-                          <div>
-                            <label htmlFor="">Média </label>
+                          </ContainerInputRadio>
+                          <ContainerInputRadio>
+                            <label htmlFor="prioridade-media">Média </label>
                             <input
                               type="radio"
                               name="prioridade"
@@ -421,9 +466,9 @@ export const TarefasList = ({
                               checked={prioridade === "media"}
                               onChange={() => setPrioridade("media")}
                             />
-                          </div>
-                          <div>
-                            <label htmlFor="">Alta </label>
+                          </ContainerInputRadio>
+                          <ContainerInputRadio>
+                            <label htmlFor="prioridade-alta">Alta </label>
                             <input
                               type="radio"
                               name="prioridade"
@@ -431,9 +476,9 @@ export const TarefasList = ({
                               checked={prioridade === "alta"}
                               onChange={() => setPrioridade("alta")}
                             />
-                          </div>
+                          </ContainerInputRadio>
                         </div>
-                      </div>
+                      </ContainerInputs>
                       <div style={{ display: "flex", gap: "10px" }}>
                         <Botao
                           type="submit"
