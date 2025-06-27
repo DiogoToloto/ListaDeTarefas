@@ -19,9 +19,9 @@ const AsideContainer = styled.aside`
   padding: 15px;
   color: aliceblue;
   justify-content: start;
+  z-index: 99;
 
   @media (max-width: 1175px) {
-    position: relative;
     height: auto;
     width: 100%;
     flex-direction: row;
@@ -87,6 +87,7 @@ export const BarraDeListas = ({
         setEditingId={setEditingId}
         menuAberto={menuAberto}
         setMenuAberto={setMenuAberto}
+        menuAbertoAG={menuAbertoAG}
       />
       <ContainerLogo>
       <HiMiniClipboardDocumentList size={"20px"}/>
@@ -99,6 +100,7 @@ export const BarraDeListas = ({
         listas={listas}
         menuAbertoAG={menuAbertoAG}
         setMenuAbertoAG={setMenuAbertoAG}
+        menuAberto={menuAberto}
         />
       </div>
     </AsideContainer>

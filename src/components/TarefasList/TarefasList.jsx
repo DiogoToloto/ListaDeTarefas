@@ -38,7 +38,8 @@ const ContainerSection = styled.section`
     overflow-y: initial;
     padding: 35px 10px;
     margin: 0;
-    min-height: 94.2vh;
+    padding-top: 80px;
+    min-height: 100vh;
   }
 `;
 

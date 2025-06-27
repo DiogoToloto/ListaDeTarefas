@@ -142,7 +142,6 @@ const CloseButtom = styled.button`
   background: transparent;
   border: none;
   color: aliceblue;
-
 `;
 
 const Agendamentos = styled.button`
@@ -156,32 +155,33 @@ const Agendamentos = styled.button`
 `;
 
 const ContainerBtAgendamento = styled.div`
-    display: flex;
-    align-items: center;
-    display: none;
-    cursor: pointer;
-    gap: 4px;
+  display: flex;
+  align-items: center;
+  display: none;
+  cursor: pointer;
+  gap: 4px;
 
-    @media (max-width: 1175px){
-        display: flex;
-    }
+  @media (max-width: 1175px) {
+    display: ${({ $menuAberto }) => $menuAberto ? "none" : "flex"};
+  }
 `;
 
 export const MenuAgendamentos = ({
   handleDateChange,
   tarefasFiltradas,
   date,
+  menuAberto,
   menuAbertoAG,
   setMenuAbertoAG,
 }) => {
   return (
     <div>
-        <ContainerBtAgendamento onClick={() => setMenuAbertoAG(true)}>
-            <p>Agendamento</p>
-                  <Agendamentos>
-            <TfiAgenda />
-                  </Agendamentos>
-        </ContainerBtAgendamento>
+      <ContainerBtAgendamento $menuAberto={menuAberto} onClick={() => setMenuAbertoAG(true)}>
+        <p>Agendamento</p>
+        <Agendamentos>
+          <TfiAgenda />
+        </Agendamentos>
+      </ContainerBtAgendamento>
 
       <SectionContainer isOpen={menuAbertoAG}>
         <CustomCalendar onChange={handleDateChange} value={date} />
@@ -212,10 +212,13 @@ export const MenuAgendamentos = ({
             )}
           </ul>
         </AgendamentosContainer>
-        
+
         <CloseButtom>
-                <IoCloseCircleOutline size={"24px"} onClick={() => setMenuAbertoAG(false)}/>
-                </CloseButtom>
+          <IoCloseCircleOutline
+            size={"24px"}
+            onClick={() => setMenuAbertoAG(false)}
+          />
+        </CloseButtom>
       </SectionContainer>
     </div>
   );

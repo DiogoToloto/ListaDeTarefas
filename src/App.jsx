@@ -106,6 +106,7 @@ function App() {
         date={date}
         tarefasFiltradas={tarefasFiltradas}
       />
+      
       <TarefasList
         listas={listas}
         listaSelecionada={listaSelecionada}

@@ -71,7 +71,7 @@ const MenuButton = styled.button`
   }
 
   @media (max-width: 1175px) {
-    display: flex; /* Exibe o botão no mobile */
+    display: ${({ $menuAbertoAG }) => $menuAbertoAG ? "none" : "flex"};
     gap: 5px;
     align-items: center;
     z-index: 1;
@@ -166,7 +166,8 @@ export const MenuHamburguer = ({
   editingId,
   setEditingId,
   menuAberto,
-  setMenuAberto
+  setMenuAberto,
+  menuAbertoAG
 }) => {
   
   
@@ -191,7 +192,7 @@ export const MenuHamburguer = ({
   return (
     <CorpoLista>
       {/* Botão de Menu no Mobile */}
-      <MenuButton onClick={() => setMenuAberto(true)}><CiBoxList /><p>Minhas Listas</p></MenuButton>
+      <MenuButton $menuAbertoAG={menuAbertoAG} onClick={() => setMenuAberto(true)}><CiBoxList /><p>Minhas Listas</p></MenuButton>
 
       {/* Lista para Desktop */}
       <ContainerLista>

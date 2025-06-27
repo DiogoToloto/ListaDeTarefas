@@ -6,7 +6,7 @@ const FundoBlur = styled.div`
     right: 0;
     left: 0;
     bottom: 0;
-    height: 100vh;
+    height: 100%;
     backdrop-filter: ${({$menuAberto, $menuAbertoAG}) => ($menuAberto || $menuAbertoAG ? "blur(5px)" : "none")};
     z-index: 98;
     pointer-events: none;
