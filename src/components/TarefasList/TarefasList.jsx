@@ -445,7 +445,7 @@ export const TarefasList = ({
                           setHora(e.target.value)
                         }}/>
                       </ContainerInputs>
-                      <ContainerInputs style={{flexWrap: 'wrap', justifyContent: 'center', gap: '5px'}}>
+                      <ContainerInputs style={{flexWrap: 'wrap', gap: '5px'}}>
                         <label htmlFor="">Prioridade:</label>
                         <div style={{ display: "flex", gap: "10px",flexWrap: 'wrap', justifyContent: 'center'  }}>
                           <ContainerInputRadio>
