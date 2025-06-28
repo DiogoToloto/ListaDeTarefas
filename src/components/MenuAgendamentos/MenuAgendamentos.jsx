@@ -29,7 +29,7 @@ const slideOut = keyframes`
 `;
 
 const CustomCalendar = styled(Calendar)`
-  background: #313131;
+  background: #222;
   border: none;
   margin-top: 50px;
 
@@ -58,15 +58,6 @@ const CustomCalendar = styled(Calendar)`
     background-color: #7c7c7c;
   }
 
-  .react-calendar__month-view__weekdays {
-    text-align: center;
-    text-transform: uppercase;
-    font: inherit;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffffff;
-  }
-
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
     background: #d6c353;
@@ -87,7 +78,7 @@ const SectionContainer = styled.section`
   align-items: center;
   text-align: center;
   gap: 25px;
-  background-color: #313131;
+  background-color: #222;
   height: 100vh;
   animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.3s ease forwards;
   padding: 20px;

@@ -115,7 +115,7 @@ const InputAddTarefa = styled.input`
   }
 
   &::placeholder {
-    color: #fff;
+    color: #ccc;
   }
 `;
 
@@ -128,11 +128,17 @@ const ContainerNovaTarefa = styled.ul`
 
 const Botao = styled.button`
   padding: 5px 10px;
-  background-color: #d6c353;
+  background: transparent;
   border: 2px solid #d6c353;
   border-radius: 14px;
   cursor: pointer;
-  color: #000;
+  color: #fff;
+  transition: background 0.2s ease-in;
+
+  &:hover {
+    background-color: #d6c353;
+    color: #000;
+  }
   
 `;
 
@@ -235,11 +241,6 @@ const ContainerInputs =styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #ccc;
-  border-radius: 22px;
-  padding: 6px;
-  gap: 10px;
-  background-color: #797979;
 `;
 
 const ContainerInputRadio = styled.div`
