@@ -447,7 +447,7 @@ export const TarefasList = ({
                       </ContainerInputs>
                       <ContainerInputs style={{flexWrap: 'wrap', justifyContent: 'center', gap: '5px'}}>
                         <label htmlFor="">Prioridade:</label>
-                        <div style={{ display: "flex", gap: "10px" }}>
+                        <div style={{ display: "flex", gap: "10px",flexWrap: 'wrap', justifyContent: 'center'  }}>
                           <ContainerInputRadio>
                             <label htmlFor="prioridade-baixa">Baixa </label>
                             <input
